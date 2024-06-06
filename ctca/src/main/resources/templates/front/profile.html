@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Tài Khoản - CTCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSS==================================================-->
+    <link rel="stylesheet" th:href="@{/resources/front/plugins/css/plugins.css}">
+    <link th:href="@{/resources/front/css/style.css}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" id="jssDefault" th:href="@{/resources/front/css/colors/green-style.css}">
+
+    <style>
+        .freelanc {
+            background: #26a9e1 !important;
+        }
+        .part-time {
+            background: #f6931e !important;
+        }
+        .part-time.tg-featuretag:before {
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+            border-left: 10px solid #f6931e;
+        }
+        .part-time.tg-featuretag:after {
+            top: 100%;
+            left: 0;
+            border-top: 5px solid #f6931e;
+            border-left: 5px solid transparent;
+        }
+        .freelanc.tg-featuretag:before {
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+            border-left: 10px solid #26a9e1;
+        }
+        .freelanc.tg-featuretag:after {
+            top: 100%;
+            left: 0;
+            border-top: 5px solid #26a9e1;
+            border-left: 5px solid transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- Start Navigation -->
+    <div th:replace="~{fragments/front/header :: header}"></div>
+
+    <!-- End Navigation -->
+    <div class="clearfix"></div>
+
+    <!-- Title Header Start -->
+    <section class="inner-header-title"
+             th:style="'background-image: url(\'' + @{/resources/front/img/banner-10.jpg} + '\');'">
+        <div class="container">
+            <h1>Tài Khoản</h1>
+        </div>
+    </section>
+    <div class="clearfix"></div>
+    <!-- Title Header End -->
+
+    <!-- Candidate Profile Start -->
+    <section class="detail-desc advance-detail-pr gray-bg">
+        <div class="container white-shadow">
+            <div class="row">
+                <div class="detail-pic">
+                    <img th:src="@{/resources/front/img/can-3.png}" class="img" alt=""/>
+                </div>
+                <div class="detail-status"><span>Active Now</span></div>
+            </div>
+
+            <div class="row bottom-mrg">
+                <div class="col-md-12 col-sm-12">
+                    <div class="advance-detail detail-desc-caption">
+                        <h4>[[${userLogin.fullName}]]</h4>
+                        <ul>
+                            <li><strong class="j-view">[[${totalPost}]]</strong>Tổng Bài Đăng</li>
+                            <li><strong class="j-applied">[[${totalCharity}]]</strong>Tổng Từ Thiện</li>
+                            <li><strong class="j-view">[[${totalPost}]]</strong>Tổng Giao Dịch</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-padd">
+                <div class="detail pannel-footer">
+                    <div class="col-md-5 col-sm-5">
+                        <ul class="detail-footer-social">
+
+                        </ul>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <div class="detail-pannel-footer-btn pull-right">
+                            <a href="/account/form" class="footer-btn grn-btn" title="">Cập Nhật Thông Tin</a>
+                            <a href="/change/form" class="footer-btn blu-btn" title="">Đổi Mật Khẩu</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="full-detail-description full-detail gray-bg">
+        <div class="container">
+            <div class="col-md-12 col-sm-12" th:if="${messageDTO != null && messageDTO.key == 'save'}">
+                <h2 class="detail-title" style="background: #fff; color: #07b107; "
+                    th:text="${messageDTO.message}"></h2>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="full-card">
+                    <div class="deatil-tab-employ tool-tab">
+                        <ul class="nav simple nav-tabs" id="simple-design-tab">
+                            <li class="active"><a href="#about">Thông Tin Tài Khoản</a></li>
+                            <li><a href="#post">Danh Sách Bài Đăng</a></li>
+                            <li><a href="#charity">Danh Sách Từ Thiện</a></li>
+                        </ul>
+                        <!-- Start All Sec -->
+                        <div class="tab-content">
+                            <!-- Start About Sec -->
+                            <div id="about" class="tab-pane fade in active">
+                                <h3>Thông Tin Tài Khoản</h3>
+                                <ul class="job-detail-des">
+                                    <li><span>Họ và Tên:</span>[[${userLogin.fullName}]]</li>
+                                    <li><span>Địa chỉ Email:</span>[[${userLogin.email}]]</li>
+                                    <li><span>Số điện thoại:</span>[[${userLogin.phone}]]</li>
+                                    <li><span>Quyền truy cập:</span>[[${userLogin.roleName}]]</li>
+                                </ul>
+                            </div>
+                            <!-- End About Sec -->
+
+                            <!-- Start Job List -->
+                            <div id="post" class="tab-pane fade">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px">
+                                    <h3>Danh Sách Bài Đăng</h3>
+                                    <a href="/post/form" class="btn btn-primary">Thêm Bài Đăng</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="full-card">
+                                            <div class="deatil-tab-employ tool-tab">
+                                                <ul class="nav simple nav-tabs" id="simple-design-tab">
+                                                    <li class="active"><a href="#PENDING">Chờ Duyệt</a></li>
+                                                    <li><a href="#APPROVED">Đã Duyệt</a></li>
+                                                    <li><a href="#COMPLETED">Hoàn Thành</a></li>
+                                                    <li><a href="#CANCELED">Đã Hủy</a></li>
+                                                </ul>
+                                                <!-- Start All Sec -->
+                                                <div class="tab-content">
+                                                    <div id="PENDING" class="tab-pane fade in active">
+                                                        <article th:each="item : ${postListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'PENDING'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/post/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">[[${item.name}]]
+                                                                            <span class="cmp-tagline">([[${item.categoryDTO.name}]])</span>
+                                                                        </h4></a>
+                                                                        <span class="cmp-time">[[${item.price}]] VNĐ</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-sm-3">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/post/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+
+                                                    <div id="APPROVED" class="tab-pane fade">
+                                                        <article th:each="item : ${postListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'APPROVED'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/post/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">[[${item.name}]]
+                                                                            <span class="cmp-tagline">([[${item.categoryDTO.name}]])</span>
+                                                                        </h4></a>
+                                                                        <span class="cmp-time">[[${item.price}]] VNĐ</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-sm-3">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/post/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+
+                                                    <div id="COMPLETED" class="tab-pane fade">
+                                                        <article th:each="item : ${postListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'COMPLETED'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/post/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">[[${item.name}]]
+                                                                            <span class="cmp-tagline">([[${item.categoryDTO.name}]])</span>
+                                                                        </h4></a>
+                                                                        <span class="cmp-time">[[${item.price}]] VNĐ</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-sm-3">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/post/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+
+                                                    <div id="CANCELED" class="tab-pane fade">
+                                                        <article th:each="item : ${postListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'CANCELED'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/post/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">[[${item.name}]]
+                                                                            <span class="cmp-tagline">([[${item.categoryDTO.name}]])</span>
+                                                                        </h4></a>
+                                                                        <span class="cmp-time">[[${item.price}]] VNĐ</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-sm-3">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/post/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+                                                </div>
+                                                <!-- Start All Sec -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Job List -->
+
+                            <!-- Start Job List -->
+                            <div id="charity" class="tab-pane fade">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px">
+                                    <h3>Danh Sách Từ Thiện</h3>
+                                    <a href="/charity/form" class="btn btn-primary">Thêm Chương Trình</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="full-card">
+                                            <div class="deatil-tab-employ tool-tab">
+                                                <ul class="nav simple nav-tabs" id="simple-design-tab">
+                                                    <li class="active"><a href="#PENDING1">Chờ Duyệt</a></li>
+                                                    <li><a href="#APPROVED1">Đã Duyệt</a></li>
+                                                    <li><a href="#COMPLETED1">Hoàn Thành</a></li>
+                                                    <li><a href="#CANCELED1">Đã Hủy</a></li>
+                                                </ul>
+                                                <!-- Start All Sec -->
+                                                <div class="tab-content">
+                                                    <div id="PENDING1" class="tab-pane fade in active">
+                                                        <article th:each="item : ${charityListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'PENDING'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/charity/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">
+                                                                            [[${item.title}]] </h4></a>
+                                                                        <span class="cmp-time">[[${item.startDate + ' > ' + item.endDate}]]</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4 col-sm-4">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/charity/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+
+                                                    <div id="APPROVED1" class="tab-pane fade">
+                                                        <article th:each="item : ${charityListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'APPROVED'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/charity/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">
+                                                                            [[${item.title}]] </h4></a>
+                                                                        <span class="cmp-time">[[${item.startDate + ' > ' + item.endDate}]]</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4 col-sm-4">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/charity/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+
+                                                    <div id="COMPLETED1" class="tab-pane fade">
+                                                        <article th:each="item : ${charityListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'COMPLETED'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img style="border-radius: initial;" th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/charity/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">
+                                                                            [[${item.title}]] </h4></a>
+                                                                        <span class="cmp-time">[[${item.startDate + ' > ' + item.endDate}]]</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4 col-sm-4">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/charity/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+
+                                                    <div id="CANCELED1" class="tab-pane fade">
+                                                        <article th:each="item : ${charityListDTO}">
+                                                            <div class="mng-company" th:if="${item.progress == 'CANCELED'}">
+                                                                <div class="col-md-2 col-sm-2">
+                                                                    <div class="mng-company-pic">
+                                                                        <img th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    <div class="mng-company-name">
+                                                                        <a th:href="@{'/charity/detail/' + ${item.id}}"><h4 style="-webkit-line-clamp: 2; -webkit-box-orient: vertical;  overflow: hidden;  display: -webkit-box;">
+                                                                            [[${item.title}]] </h4></a>
+                                                                        <span class="cmp-time">[[${item.startDate + ' > ' + item.endDate}]]</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4 col-sm-4">
+                                                                    <div class="mng-company-location">
+                                                                        <p><i class="fa fa-map-marker"></i> [[${item.note}]]</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-sm-1">
+                                                                    <div class="mng-company-action">
+                                                                        <a th:href="@{'/charity/form/' + ${item.id}}"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    </div>
+                                                                </div>
+
+                                                                <th:block th:switch="${item.progress}">
+                                                                    <span class="tg-themetag part-time tg-featuretag" th:case="PENDING">Chờ Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" th:case="CANCELED">Đã Hủy</span>
+                                                                    <span class="tg-themetag freelanc tg-featuretag"
+                                                                          th:case="APPROVED">Đã Duyệt</span>
+                                                                    <span class="tg-themetag tg-featuretag" style="background-color: blue;"
+                                                                          th:case="COMPLETED">Hoàn Thành</span>
+                                                                </th:block>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+                                                </div>
+                                                <!-- Start All Sec -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Job List -->
+                        </div>
+                        <!-- Start All Sec -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer Section Start -->
+    <div th:replace="~{fragments/front/footer :: footer}"></div>
+    <div class="clearfix"></div>
+    <!-- Footer Section End -->
+
+    <!-- Scripts
+    ================================================== -->
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/viewportchecker.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/bootsnav.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/select2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/wysihtml5-0.3.0.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/bootstrap-wysihtml5.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/datedropper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/dropzone.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/loader.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/owl.carousel.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/slick.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/gmap3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/jquery.easy-autocomplete.min.js}"></script>
+    <script th:src="@{/resources/front/js/custom.js}"></script>
+    <script th:src="@{/resources/front/js/jQuery.style.switcher.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#styleOptions').styleSwitcher();
+        });
+    </script>
+    <script>
+        function openRightMenu() {
+            document.getElementById("rightMenu").style.display = "block";
+        }
+
+        function closeRightMenu() {
+            document.getElementById("rightMenu").style.display = "none";
+        }
+    </script>
+</div>
+</body>
+
+<!-- employer-profile41:42-->
+</html>

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Từ Thiện - CTCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSS==================================================-->
+    <link rel="stylesheet" th:href="@{/resources/front/plugins/css/plugins.css}">
+    <link th:href="@{/resources/front/css/style.css}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" id="jssDefault" th:href="@{/resources/front/css/colors/green-style.css}">
+    <!-- Basic Page Needs
+    ================================================== -->
+    <style>
+        .img-popup {
+            position: fixed;
+            top: 0; left:0;
+            background : rgba(0, 0, 0, .9);
+            height: 100%;
+            width: 100%;
+            z-index: 100;
+        }
+        .img-popup span {
+            position: absolute;
+            top: 15%;
+            right: 26%;
+            font-size: 40px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+        }
+        .img-popup img {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 450px;
+            object-fit: contain;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/front/header :: header}"></div>
+<div class="Loader"></div>
+<div class="wrapper">
+    <div class="clearfix"></div>
+
+    <!-- Title Header Start -->
+    <section class="inner-header-title" th:style="'background-image: url(\'' + @{/resources/front/img/banner_3.jpg} + '\');'">
+        <div class="container">
+            <h1>Từ Thiện</h1>
+        </div>
+    </section>
+    <div class="clearfix"></div>
+    <!-- Title Header End -->
+    <div class="img-popup" id="img-popup">
+        <span id="img-close">&times;</span>
+        <img th:src="@{${charityDTO.image}}" class="img-popup" alt=""/>
+    </div>
+    <!-- Candidate Profile Start -->
+    <section class="detail-desc advance-detail-pr gray-bg">
+        <div class="container white-shadow">
+
+            <div class="row">
+                <div class="detail-pic" style="width: 250px; margin:10px auto; height:250px;
+                                max-width: 250px; border-radius: 10%; margin: 0px auto;padding:0;">
+                    <img th:src="@{${charityDTO.image}}" id="img" class="img" alt=""
+                         style="width: 250px; margin:10px auto; height:250px;
+                                max-width: 250px; border-radius: 10%; margin: 0px auto; object-fit: contain;"/>
+                </div>
+                <div class="detail-status"><span>Active Now</span></div>
+            </div>
+
+            <div class="row bottom-mrg">
+                <div class="col-md-12 col-sm-12">
+                    <div class="advance-detail detail-desc-caption">
+                        <h4 th:text="${charityDTO.title}">Tiêu Đề</h4>
+                        <span class="designation" th:text="${'#ID' + charityDTO.id}">Mã ID</span>
+                        <ul>
+                            <li><strong class="j-view" th:text="${charityDTO.endDate}">0</strong>Thời Gian Kết Thúc</li>
+                            <li><strong class="j-applied" th:text="${totalDonation}">0</strong>Số Lựợng Quyên Góp</li>
+                            <li><strong class="j-shared" th:text="${totalVolunteer}">0</strong>Số Lựợng Cộng Tác </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-padd">
+                <div class="detail pannel-footer">
+                    <div class="col-md-5 col-sm-5">
+                        <ul class="detail-footer-social">
+                            <li><a class="facebook" target="blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="twitter" target="blank"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="linkedin" target="blank"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <div class="detail-pannel-footer-btn pull-right">
+                            <a th:href="@{'/donate/form/' +${charityDTO.id}}" class="footer-btn btn-warning" title="">Quyên Góp</a>
+                            <a th:href="@{'/volunteer/form/' +${charityDTO.id}}" class="footer-btn blu-btn" title="">Tình Nguyện</a>
+                        <a type="button" th:if="${isOwner == true}" th:href="@{'/charity/form/cancel/' +${charityDTO.id}}" class="footer-btn btn btn-danger" title="">Hủy Chương Trình</a>
+                        <a type="button" th:if="${isOwner == true}" th:href="@{'/charity/form/complete/' +${charityDTO.id}}" class="footer-btn grn-btn" title="">Hoàn Thành</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="full-detail-description full-detail gray-bg">
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="full-card">
+                    <div class="deatil-tab-employ tool-tab">
+                        <ul class="nav simple nav-tabs" id="simple-design-tab">
+                            <li class="active"><a href="#about">Thông Tin</a></li>
+                            <li><a href="#friends">Tình Nguyện Viên</a></li>
+                            <li><a href="#matches-job">Quyên Góp</a></li>
+                        </ul>
+
+                        <!-- Start All Sec -->
+                        <div class="tab-content">
+                            <div id="about" class="tab-pane fade in active">
+                                <h3>Thông Tin</h3>
+
+                                <ul class="job-detail-des">
+                                    <li><span>Ngày Bắt Đầu:</span> <a th:text="${charityDTO.startDate}"></a></li>
+                                    <li><span>Ngày Kết Thúc:</span> <a th:text="${charityDTO.endDate}"></a></li>
+                                    <li><span>Đại Diện Pháp Luật:</span> <a th:text="${ownerDTO.fullName}"></a></li>
+                                    <li><span>Địa Chỉ Email:</span> <a th:text="${ownerDTO.email}"></a></li>
+                                    <li><span>Số Điện Thoại:</span> <a th:text="${ownerDTO.phone}"></a></li>
+                                </ul>
+
+                                <p th:utext="${charityDTO.description}"></p>
+                            </div>
+                            <!-- End About Sec -->
+
+                            <!-- Start Friend List -->
+                            <div id="friends" class="tab-pane fade">
+                                <h3>Tình Nguyện Viên</h3>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4" th:each="item : ${volunteerListDTO}">
+                                        <div class="manage-cndt">
+                                            <p class="cndt-status pending" style="color: black; background-color: yellow;" th:if="${item.progress == 'PENDING'}">Chờ Duyệt</p>
+                                            <p class="cndt-status available" style="color: white; background-color: green;" th:if="${item.progress == 'ACCEPTED'}" >Đã Duyệt</p>
+                                            <p class="cndt-status pending" style="color: white; background-color: red;" th:if="${item.progress == 'CANCELED'}" >Từ Chối</p>
+
+                                            <div class="cndt-caption">
+                                                <div class="cndt-pic">
+                                                    <img src="assets/img/can-1.png" class="img-responsive" alt="">
+                                                </div>
+                                                <h4 th:text="${item.account.fullName}">Fullname</h4>
+                                                <p th:text="${item.note}">Note</p>
+                                            </div>
+                                            <a th:if="${isOwner == true}" th:href="@{'/volunteer/form/check/' + ${item.id}}" title="" class="cndt-profile-btn">Xét Duyệt</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Friend List -->
+
+                            <!-- Start Job List -->
+                            <div id="matches-job" class="tab-pane fade">
+                                <h3>Danh Sách Quyên Góp</h3>
+                                <div class="row" th:each="item : ${donationListDTO}">
+                                    <article class="advance-search-job">
+                                        <div class="row no-mrg">
+                                            <div class="col-md-6 col-sm-6">
+                                                <a href="#" title="job Detail">
+                                                    <div class="advance-search-img-box">
+                                                        <img th:src="@{${item.image}}" class="img-responsive" alt="">
+                                                    </div>
+                                                </a>
+                                                <div class="advance-search-caption">
+                                                    <h4 th:text="${'#ID' + item.account.id + ' - ' + item.account.fullName}">FullName</h4>
+                                                    <span th:text="${item.date}">Date</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <div class="advance-search-job-locat">
+                                                    <p th:text="${item.note}"><i class="fa fa-map-marker"></i>Charity Title</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <a th:if="${isOwner}" th:href="@{'/donate/form/update/' + ${item.id}}"
+                                                   data-target="#apply-job" class="btn advance-search" title="apply">Xét Duyệt</a>
+                                            </div>
+                                        </div>
+                                        <span class="tg-themetag tg-featuretag" style="color: black; background-color: yellow;" th:if="${item.progress == 'PENDING'}">Chờ Duyệt</span>
+                                    </article>
+                                </div>
+                            </div>
+                            <!-- End Job List -->
+
+                        </div>
+                        <!-- Start All Sec -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Candidate Profile End -->
+
+    <!-- Footer Section Start -->
+    <div th:replace="~{fragments/front/footer :: footer}"></div>
+    <div class="clearfix"></div>
+    <!-- Footer Section End -->
+
+    <!-- Scripts
+    ================================================== -->
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/viewportchecker.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/bootsnav.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/select2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/wysihtml5-0.3.0.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/bootstrap-wysihtml5.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/datedropper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/dropzone.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/loader.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/owl.carousel.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/slick.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/gmap3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/front/plugins/js/jquery.easy-autocomplete.min.js}"></script>
+    <script th:src="@{/resources/front/js/custom.js}"></script>
+    <script th:src="@{/resources/front/js/jQuery.style.switcher.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#styleOptions').styleSwitcher();
+        });
+    </script>
+    <script>
+        function openRightMenu() {
+            document.getElementById("rightMenu").style.display = "block";
+        }
+
+        function closeRightMenu() {
+            document.getElementById("rightMenu").style.display = "none";
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#img-popup').hide();
+            $('#img').on("click", function () {
+                $('#img-popup').show();
+            })
+            $('#img-close').on("click", function () {
+                $('#img-popup').hide();
+             })
+            $('#img-popup').on("click", function () {
+                $('#img-popup').hide();
+            })
+        });
+    </script>
+    <script>
+        const hosturl = window.location.href;
+        const link = encodeURI(hosturl);
+        const msg = encodeURIComponent(document.title);
+        const title = encodeURIComponent(document.title);
+        const fb = document.querySelector('.facebook');
+        fb.href = `https://www.facebook.com/share.php?u=${link}`;
+        const twitter = document.querySelector('.twitter');
+        twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+        const linkedIn = document.querySelector('.linkedin');
+        linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+    </script>
+</div>
+</body>
+</html>

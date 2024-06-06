@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Trang Chủ - CTCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSS==================================================-->
+    <link rel="stylesheet" th:href="@{/resources/front/plugins/css/plugins.css}">
+    <link th:href="@{/resources/front/css/style.css}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" id="jssDefault" th:href="@{/resources/front/css/colors/green-style.css}">
+    <style>
+        .brows-job-position h3 {
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            display: -webkit-box;
+        }
+        .grid-view-caption {
+            margin: 1em 0 0;
+        }
+        .paid-candidate-box-detail h4 {
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            display: -webkit-box;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/front/header :: header}"></div>
+<section class="slide-banner scroll-con-sec hero-section" data-scrollax-parent="true" id="sec1">
+    <div class="slideshow-container">
+        <div class="slideshow-item">
+            <div class="bg" th:attr="data-bg=@{/resources/front/img/banner_2.jpg}"></div>
+        </div>
+        <div class="slideshow-item">
+            <div class="bg" th:attr="data-bg=@{/resources/front/img/banner_1.jpg}"></div>
+        </div>
+        <div class="slideshow-item">
+            <div class="bg" th:attr="data-bg=@{/resources/front/img/banner_3.jpg}"></div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="hero-section-wrap fl-wrap">
+        <div class="container">
+            <div class="intro-item fl-wrap">
+                <div class="caption text-center cl-white">
+                    <h2>Chạm Để Kết Nối</h2>
+                    <p>Hãy yêu thương và chia sẻ với mọi người, bạn sẽ nhận về niềm vui và hạnh phúc.</p>
+                </div>
+                <form class="form-horizontal" action="/post" method="get">
+                    <div class="col-md-5 no-padd">
+                        <div class="input-group">
+                            <input type="text" class="form-control br-1" id="joblist" placeholder="Bạn muốn tìm gì..."
+                                   required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-padd">
+                        <div class="input-group">
+                            <select id="choose-city" class="form-control" name="categoryId">
+                                <option th:value="-1">Chọn Danh Mục</option>
+                                <option th:text="${item.name}" th:value="${item.id}"
+                                        th:each="item : ${categoryList}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 no-padd">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-success full-width">Tìm Kiếm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="clearfix"></div>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="main-heading">
+                <p>MUA BÁN TRAO ĐỔI</p>
+                <h2>Có thể bạn <span>Quan Tâm</span></h2>
+            </div>
+        </div>
+        <div class="row extra-mrg">
+            <div class="col-md-4 col-sm-6" th:each="item : ${postList}">
+                <div class="grid-view brows-job-list">
+                    <div class="brows-job-company-img" style="width: 200px; margin: 10px auto; height: 200px; max-width: 200px; margin: 0px auto;">
+                        <img th:src="@{${item.image}}" alt="" style="width: 200px; margin: 10px auto; height: 200px; max-width: 200px; border-radius: 10%;  margin: 0px auto;"/>
+                    </div>
+                    <div class="brows-job-position">
+                        <h3><a th:href="@{'/post/detail/' + ${item.id}}" th:text="${item.name}"></a></h3>
+                    </div>
+                    <div class="brows-job-type">
+                        <span th:class="${item.colorType}" th:if="${item.type == 'cho_tang'}">Cho Tặng</span>
+                        <span th:class="${item.colorType}" th:if="${item.type == 'trao_doi'}" >Trao Đổi</span>
+                        <span th:class="${item.colorType}" th:if="${item.type == 'mua_ban'}" >Mua Bán</span>
+                    </div>
+                    <ul class="grid-view-caption">
+                        <li>
+                            <div class="brows-job-location">
+                                <p><i class="fa fa-map-marker"></i>Đà Nẵng</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p><span class="brows-job-sallery"><i class="fa fa-money"></i>[[${item.price}]] VNĐ</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="text-center">
+                    <a href="/post" class="btn btn-primary">Xem Thêm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="clearfix"></div>
+
+<section class="gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="main-heading">
+                    <p>Chương trình quyên góp</p>
+                    <h2>Các chương trình <span>Quyên Góp</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6" th:each="item : ${charityList}">
+                <div class="paid-candidate-container">
+                    <div class="paid-candidate-box" style="padding: 20px">
+                        <div class="paid-candidate-inner--box">
+                            <div class="paid-candidate-box-thumb">
+                                <img th:src="@{${item.image}}" alt=""/>
+                            </div>
+                            <div class="paid-candidate-box-detail">
+                                <a th:href="@{'/charity/detail/' + ${item.id}}"><h4 th:text="${item.title}"></h4></a>
+                                <span class="desination" th:text="${'#' + item.id}"></span>
+                            </div>
+                        </div>
+                        <div class="paid-candidate-box-extra">
+                            <ul>
+                                <li class="more-skill bg-primary">Kết Thúc : [[${item.endDate}]]</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="text-center">
+                    <a href="/charity" class="btn btn-primary">Xem Thêm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="clearfix"></div>
+
+<div th:replace="~{fragments/front/footer :: footer}"></div>
+
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/viewportchecker.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/bootsnav.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/select2.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/wysihtml5-0.3.0.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/bootstrap-wysihtml5.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/datedropper.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/dropzone.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/loader.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/owl.carousel.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/gmap3.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/front/plugins/js/jquery.easy-autocomplete.min.js}"></script>
+<script th:src="@{/resources/front/js/custom.js}"></script>
+<script th:src="@{/resources/front/js/jQuery.style.switcher.js}"></script>
+</body>
+</html>
